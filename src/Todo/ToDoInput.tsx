@@ -4,10 +4,14 @@ import { useRef } from 'react'
 import { FaPen } from "react-icons/fa";
 import { supabase } from "../supabase/client";
 
-export default function ToDoInput({ getTodos }) {
+interface ToDoInputProps {
+    getTodos: () => void;
+}
+
+export default function ToDoInput({ getTodos } : ToDoInputProps) {
     const supabaseUrl = import.meta.env.VITE_SUPABSE_URL;
     const supabaseKey = import.meta.env.VITE_SUPABSE_KEY;
-    const inRef = useRef();
+    const inRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         getTodos();
@@ -15,6 +19,7 @@ export default function ToDoInput({ getTodos }) {
 
 
     const handleAdd = async () => {
+        if(inRef.current === null) return;
         if (inRef.current.value == "") {
             alert("값을 입력해 주세요.");
             inRef.current.focus();
@@ -34,7 +39,7 @@ export default function ToDoInput({ getTodos }) {
         }
 
     }
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: { key: string; }) => {
         if (e.key == 'Enter') {
             handleAdd();
         }

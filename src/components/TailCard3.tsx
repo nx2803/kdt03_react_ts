@@ -1,7 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const getBorderColorClass = (stat) => {
+interface TailCard3Props {
+    data?: any[];
+    stat: statusMapt;
+}
+ const statusMap = {
+        '1': '통신이상',
+        '2': '충전가능',
+        '3': '충전중',
+        '4': '운영중지',
+        '5': '점검중',
+        '9': '예약가능',
+        '0': '알 수 없음'
+    };
+    type statusMapt = keyof typeof statusMap;
+
+const getBorderColorClass = (stat : string) => {
     switch (stat) {
         case '2':
             return 'bg-linear-to-tl from-neutral-800 from 70% to-green-500/40 border-green-500';
@@ -17,21 +32,13 @@ const getBorderColorClass = (stat) => {
     }
 };
 
-const StatusBadge = ({ stat }) => {
+const StatusBadge = ({ stat } :TailCard3Props) => {
     let colorClass;
     let statusText;
 
-    const statusMap = {
-        '1': '통신이상',
-        '2': '충전가능',
-        '3': '충전중',
-        '4': '운영중지',
-        '5': '점검중',
-        '9': '예약가능',
-        '0': '알 수 없음'
-    };
-
+   
     statusText = statusMap[stat] || '미확인';
+    
 
     if (stat === '2') colorClass = 'bg-green-600 text-white';
     else if (stat === '3') colorClass = 'bg-yellow-600 text-white';
@@ -47,7 +54,7 @@ const StatusBadge = ({ stat }) => {
 };
 
 
-export default function TailCard3({ data }) {
+export default function TailCard3({ data } : TailCard3Props) {
     if (!data || data.length === 0) {
         return null;
     }

@@ -6,10 +6,17 @@ import { useRef } from 'react';
 import { MdOutlineCancel } from "react-icons/md";
 import { MdSaveAs } from "react-icons/md";
 import { supabase } from "../supabase/client";
-export default function ToDOItem({ todo, setTodos, getTodos }) {
+import type { ToDo } from './ToDoList';
+interface ToDOItemProps {
+    todo: ToDo;
+    setTodos: React.Dispatch<React.SetStateAction<ToDo[]>>;
+    getTodos: () => void;
+}
+
+export default function ToDOItem({ todo, setTodos, getTodos } : ToDOItemProps) {
     const supabaseUrl = import.meta.env.VITE_SUPABSE_URL;
     const supabaseKey = import.meta.env.VITE_SUPABSE_KEY;
-    const inRef = useRef();
+    const inRef = useRef<HTMLInputElement>(null);
     // const [todos, setTodos] = useAtom(todosAtom);
     const [isEdit, setIsEdit] = useState(false);
     const [editText, setEditText] = useState(todo.text);
@@ -29,6 +36,7 @@ export default function ToDOItem({ todo, setTodos, getTodos }) {
         setIsEdit(false);
     }
     const handleSave = async () => {
+        if(inRef.current === null) return;
         if (inRef.current.value == "") {
             alert("값을 입력해주세요.");
             inRef.current.focus();
@@ -64,6 +72,7 @@ export default function ToDOItem({ todo, setTodos, getTodos }) {
     }
     const handleEdit = () => {
         setIsEdit(true)
+        if(inRef.current === null) return;
         inRef.current.focus();
     }
 
@@ -86,7 +95,7 @@ export default function ToDOItem({ todo, setTodos, getTodos }) {
                         onChange={(e) => setEditText(e.target.value)} />
 
                     <TailButton color='gray' caption={<MdSaveAs className='text-3xl' />} onClick={handleSave} />
-                    <TailButton color='white' caption={<MdOutlineCancel className='text-3xl' onClick={handleCancel} />} />
+                    <TailButton color='white' caption={<MdOutlineCancel className='text-3xl' />}onClick={handleCancel} /> 
                 </div>
                 :
                 <div className='flex flex-row gap-5'>
@@ -96,7 +105,7 @@ export default function ToDOItem({ todo, setTodos, getTodos }) {
 
 
                     <TailButton color='gray' caption={<FaEdit className='text-3xl' />} onClick={handleEdit} />
-                    <TailButton color='white' caption={<MdDeleteForever className='text-3xl' onClick={handleDelete} />} />
+                    <TailButton color='white' caption={<MdDeleteForever className='text-3xl'  />} onClick={handleDelete}/>
                 </div>
             }
 

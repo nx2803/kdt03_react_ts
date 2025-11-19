@@ -6,8 +6,13 @@ const BallColor = [
   "border-red-400",
   "border-zinc-300",
   "border-lime-400"
-]
-export default function TailBall({n}) {
+] as const;
+
+interface TailBallProps {
+  n: number;
+}
+
+export default function TailBall({n}: TailBallProps) {
   
   return (
     <div className= {`rounded-full m-2 border-3 w-20 h-20 font-bold ${BallColor[Math.floor(n/10)]}

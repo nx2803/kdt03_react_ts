@@ -1,3 +1,3 @@
 import { atom } from "jotai";
-
-export const sessionAtom = atom(null);
+import type { Session } from '@supabase/supabase-js';
+export const sessionAtom = atom<Session | null>(null);

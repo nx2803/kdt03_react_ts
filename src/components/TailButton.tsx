@@ -61,9 +61,16 @@ const BTStyle = {
         text: "text-white"
     }
 
+} as const
+
+interface TailButtonProps {
+    color: keyof typeof BTStyle;
+    caption: any;
+    onClick: () => void;
+    className?: string;
 }
 
-export default function TailButton({ color, caption, onClick, className }) {
+export default function TailButton({ color, caption, onClick, className }: TailButtonProps) {
     const btstyle = BTStyle[color];
     return (
         <div>

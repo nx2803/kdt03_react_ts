@@ -4,19 +4,25 @@ import { Link } from 'react-router-dom';
 
 const apikey = import.meta.env.VITE_TRA_API;
 const SESSION_KEY = 'selectedGugun';
+interface FestivalItem {
+    UC_SEQ: number;
+    GUGUN_NM: string;
+    MAIN_IMG_NORMAL: string;
+    [key: string]: any;
+}
 
 export default function FestGallary() {
 
     const initialGugun = sessionStorage.getItem(SESSION_KEY) || '전체';
     const [selectedGugun, setSelectedGugun] = useState(initialGugun);
     
-    const [originalData, setOriginalData] = useState([]);
-    const [tdata, setTdata] = useState([]);
-    const [gdata, setGdata] = useState(['전체']);
+    const [originalData, setOriginalData] = useState<FestivalItem[]>([]);
+    const [tdata, setTdata] = useState<FestivalItem[]>([]);
+    const [gdata, setGdata] = useState<string[]>(['전체']);
 
     const baseurl = '/dataApi/6260000/FestivalService/getFestivalKr';
 
-    const handleFilter = (gugun) => {
+    const handleFilter = (gugun: string) => {
         const selectedValue = gugun;
         
         sessionStorage.setItem(SESSION_KEY, selectedValue);
@@ -29,7 +35,7 @@ export default function FestGallary() {
         }
     };
     
-    const handleChange = (e) => {
+    const handleChange = (e: { target: { value: any; }; }) => {
         const newGugun = e.target.value;
         setSelectedGugun(newGugun);
         handleFilter(newGugun);
@@ -57,15 +63,15 @@ export default function FestGallary() {
                 setOriginalData(dataArray);
                 
                 const guguns = dataArray
-                    .map(item => item.GUGUN_NM)
-                    .filter((gugun, index, self) => gugun && self.indexOf(gugun) === index)
+                    .map((item: { GUGUN_NM: any; }) => item.GUGUN_NM)
+                    .filter((gugun: any, index: any, self: string | any[]) => gugun && self.indexOf(gugun) === index)
                     .sort();
 
                 setGdata(['전체', ...guguns]);
                 const initialFilterValue = sessionStorage.getItem(SESSION_KEY) || '전체';
                 
                 if (initialFilterValue !== '전체') {
-                    const filtered = dataArray.filter(item => item.GUGUN_NM === initialFilterValue);
+                    const filtered = dataArray.filter((item: { GUGUN_NM: string; }) => item.GUGUN_NM === initialFilterValue);
                     setTdata(filtered);
                 } else {
                     setTdata(dataArray);
@@ -113,7 +119,7 @@ export default function FestGallary() {
                     tdata.map((item, idx) => (
                         <Link to="/festival/contents" state={{contents:item}} key={item.UC_SEQ + idx}>
                             <TailCard2
-                                itemId={item.UC_SEQ}
+                                itemid={item.UC_SEQ}
                                 item={item}
                                 img={item.MAIN_IMG_NORMAL}
                             />

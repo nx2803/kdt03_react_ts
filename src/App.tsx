@@ -13,19 +13,19 @@ import TestTs from "./TestTs/TestTs";
 import { useAtomValue } from "jotai";
 import { sessionAtom } from "./AtomAuth";
 
+
+
 function App() {
   // const [count, setCount] = useState(0)
   const session = useAtomValue(sessionAtom);
   return (
 
-    <BrowserRouter className="flex flex-col justify-between">
+    <BrowserRouter>
       <div className='w-full h-screen  flex flex-col overflow-hidden bg-zinc-900'>
         <Header />
 
         <div className="w-full flex-1  flex justify-center items-center">
           <main className="container  mx-auto flex-1 p-4 overflow-x-hidden text-center text-white overflow-y-auto ">
-
-
             <div className='w-full flex flex-col justify-center items-center'>
               {!session ? <Routes>
                 <Route path='/' element={<Login />} />
@@ -34,7 +34,8 @@ function App() {
                 <Route path='/Festival/contents' element={<Login />} />
                 <Route path='/TodoList' element={<Login />} />
                 <Route path='/TestTs' element={<Login />} />
-              </Routes> : <Routes>
+              </Routes> : 
+              <Routes>
                 <Route path='/' element={<Login />} />
                 <Route path='/Lotto' element={<Lotto />} />
                 <Route path='/Festival' element={<FestGallary />} />
@@ -42,18 +43,10 @@ function App() {
                 <Route path='/TodoList' element={<ToDoList />} />
                 <Route path='/TestTs' element={<TestTs />} />
               </Routes>}
-
-
-
-
             </div>
-
-
           </main>
         </div>
-
         <Footer />
-
       </div>
     </BrowserRouter>
   )

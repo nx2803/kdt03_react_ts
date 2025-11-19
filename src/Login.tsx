@@ -3,11 +3,12 @@ import { supabase } from './supabase/client';
 import { useAtom } from 'jotai';
 import { sessionAtom } from './AtomAuth';
 import { FaGithub } from "react-icons/fa";
+import type {Session, User} from '@supabase/supabase-js';
 function Login() {
   // session 상태를 저장하는 state
-  const [session, setSession] = useAtom(sessionAtom);
+  const [session, setSession] = useAtom<Session | null>(sessionAtom);
   // user 정보를 저장하는 state
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
 
   // 컴포넌트가 마운트될 때 한 번 실행되는 useEffect
   useEffect(() => {
@@ -53,7 +54,7 @@ function Login() {
           onClick={signInWithGithub} // 버튼 클릭 시 GitHub으로 로그인 함수 호출
           className=" flex flex-row bg-zinc-600 text-white rounded hover:bg-zinc-500"
         >
-          <FaGithub className='m-3 text-4xl'/>
+          <FaGithub className='m-3 mx-10 text-4xl'/>
         </button>
       </div>
     );
@@ -61,8 +62,11 @@ function Login() {
   // 세션이 있는 경우 (로그인된 상태)
   else {
     return (
+
       <div className="flex flex-col items-center justify-center h-full">
         {/* 사용자 이름 또는 이메일을 환영 메시지에 표시 */}
+        <FaGithub className='text-6xl mb-5'/>
+
         <h1 className="text-2xl font-bold mb-4">환영합니다, {user?.user_metadata?.user_name || user?.email}!</h1>
         {/* 사용자 이메일 표시 */}
         <p className="mb-4">이메일: {user?.email}</p>

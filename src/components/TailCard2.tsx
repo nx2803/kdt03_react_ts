@@ -1,6 +1,12 @@
 import React from 'react';
 
-export default function TailCard({ itemid, item, img }) {
+interface TailCardProps {
+    itemid: number;
+    item: any;
+    img: string;
+}
+
+export default function TailCard({ itemid, item, img } : TailCardProps) {
     const imageUrl = item.galWebImageUrl || '';
     const title1 = item.MAIN_TITLE || '제목 없음';
     const title = title1.replace(/\s*\(\s*한\s*,\s*영\s*,\s*중간\s*,\s*중번\s*,\s*일\s*\)/, '');

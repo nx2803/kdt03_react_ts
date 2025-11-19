@@ -3,9 +3,10 @@ import TailBall from '../components/TailBall'
 import TailButton from '../components/TailButton'
 import { FaPlus } from "react-icons/fa";
 export default function Lotto() {
+  
   const genNum = () => {
 
-    const num = new Set();
+    const num = new Set<number>();
     while (num.size < 7) {
       num.add(Math.floor(Math.random() * 45) + 1);
     }
@@ -19,12 +20,12 @@ export default function Lotto() {
     return mainN;
 
   };
-  const [num, setNum] = useState([]);
+  const [num, setNum] = useState<number[]>([]);
 
   const handleNum = () => {
 
     setNum(genNum());
-    
+
   };
 
 
@@ -34,7 +35,7 @@ export default function Lotto() {
         <TailBall n={num[0]} /><TailBall n={num[1]} /><TailBall n={num[2]} /><TailBall n={num[3]} /><TailBall n={num[4]} /><TailBall n={num[5]} /><FaPlus className='text-4xl' /><TailBall n={num[6]} />
 
       </div>
-      <TailButton caption="로또번호생성" color="gray" onClick={handleNum} className="mb-5"/>
+      <TailButton caption="로또번호생성" color="gray" onClick={handleNum} className="mb-5" />
     </div>
   )
 }

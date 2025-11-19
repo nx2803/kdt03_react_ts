@@ -3,13 +3,20 @@ import ToDoInput from './ToDoInput'
 import ToDoItem from './ToDoItem'
 import { RiSupabaseFill } from "react-icons/ri";
 import { supabase } from "../supabase/client";
+export interface ToDo {
+        id: number;
+        text: string;
+        completed: boolean;
+    } 
 export default function ToDoList() {
     // const todos = useAtomValue(todosAtom);
     // const comp = useAtomValue(completedAtom);
-    const [todos, setTodos] = useState([]);
+   
+    const [todos, setTodos] = useState<ToDo[]>([]);
     const [comp, setComp] = useState(0);
     const supabaseUrl = import.meta.env.VITE_SUPABSE_URL;
     const supabaseKey = import.meta.env.VITE_SUPABSE_KEY;
+
 
 
     // const getTodos = async () => {
@@ -44,6 +51,7 @@ export default function ToDoList() {
         setComp(todos.filter(todo => todo.completed).length);
     }, [todos]);
 
+    
     return (
         <div className='flex flex-col w-250 justify-center items-center'>
             <div className="mt-10 text-5xl font-semibold text-center flex flex-row ">

@@ -1,6 +1,11 @@
 import React from 'react';
 
-export default function TailCard({ itemid, item }) {
+interface TailCardProps {
+    itemid: number;
+    item: any;
+}
+
+export default function TailCard({ itemid, item }: TailCardProps) {
     const imageUrl = item.galWebImageUrl || '';
     const title = item.galTitle || '제목 없음';
     const location = item.galPhotographyLocation || '위치 정보 없음';
@@ -28,7 +33,7 @@ export default function TailCard({ itemid, item }) {
                 <p className='text-sm text-gray-300'>{location}</p>
 
                 <div className='pt-1 flex flex-wrap gap-1'>
-                    {keywords.split(',').map((keyword, index) => {
+                    {keywords.split(',').map((keyword : string, index : number) => {
                         const trimmedKeyword = keyword.trim();
                         if (trimmedKeyword) {
                             return (
